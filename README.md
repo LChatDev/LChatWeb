@@ -19,3 +19,5 @@ LChat's web frontend and PHP gateway. A separate [LChatHost](https://github.com/
 - Бесплатный хостинг / Free hosting: [Русский](FREE_HOSTING_RU.md) · [English](FREE_HOSTING_EN.md)
 
 Дополнительные репозитории / Dedicated guides: [LChatCalls](https://github.com/LChatDev/LChatCalls) · [LChatFree](https://github.com/LChatDev/LChatFree).
+
+- Бесплатный домен / Free hostname: [Русский](FREE_DOMAIN_RU.md) · [English](FREE_DOMAIN_EN.md)
