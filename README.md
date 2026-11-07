@@ -23,3 +23,5 @@ LChat's web frontend and PHP gateway. A separate [LChatHost](https://github.com/
 - Бесплатный домен / Free hostname: [Русский](FREE_DOMAIN_RU.md) · [English](FREE_DOMAIN_EN.md)
 
 Текст сообщения: до **10 МиБ в UTF-8**. При обновлении создайте резервную копию базы; MySQL-миграция расширяет поля сообщений и очереди ботов. Для больших запросов проверьте лимиты PHP, веб-сервера и `max_allowed_packet` MySQL (не менее 32 МиБ). Лимит вложений задаётся отдельно.
+
+Анимированные эмодзи и сведения об источнике: [EMOJI.md](EMOJI.md).
