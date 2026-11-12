@@ -41,35 +41,59 @@ func validBackend(raw string) (*url.URL, error) {
 }
 
 func probe(address *url.URL, secret string, roots *x509.CertPool) (bool, error) {
-	target := *address
-	target.Path = strings.TrimRight(target.Path, "/") + "/install.php"
-	target.RawPath = ""
-	request, err := http.NewRequest("GET", target.String(), nil)
-	if err != nil {
-		return false, err
-	}
-	request.Header.Set("X-LChat-Gateway", "1")
-	request.Header.Set("X-LChat-Proxy-Key", secret)
-	request.Header.Set("X-LChat-Client-IP", "127.0.0.1")
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	transport.TLSClientConfig = &tls.Config{RootCAs: roots, MinVersion: tls.VersionTLS12}
 	defer transport.CloseIdleConnections()
 	client := http.Client{Transport: transport, Timeout: 12 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
-	response, err := client.Do(request)
-	if err != nil {
-		return false, err
+	check := func(endpoint, query string, result any) (int, error) {
+		target := *address
+		target.Path = strings.TrimRight(target.Path, "/") + "/" + endpoint
+		target.RawPath, target.RawQuery = "", query
+		request, err := http.NewRequest("GET", target.String(), nil)
+		if err != nil {
+			return 0, err
+		}
+		request.Header.Set("X-LChat-Gateway", "1")
+		request.Header.Set("X-LChat-Proxy-Key", secret)
+		request.Header.Set("X-LChat-Client-IP", "127.0.0.1")
+		response, err := client.Do(request)
+		if err != nil {
+			return 0, err
+		}
+		defer response.Body.Close()
+		if response.StatusCode != 200 {
+			return response.StatusCode, fmt.Errorf("LChatHost вернул HTTP %d", response.StatusCode)
+		}
+		if err = json.NewDecoder(http.MaxBytesReader(nil, response.Body, 8192)).Decode(result); err != nil {
+			return response.StatusCode, fmt.Errorf("адрес не вернул ожидаемый ответ LChatHost")
+		}
+		return response.StatusCode, nil
 	}
-	defer response.Body.Close()
-	if response.StatusCode != 200 {
-		return false, fmt.Errorf("LChatHost вернул HTTP %d", response.StatusCode)
-	}
-	var status struct {
+	var setup struct {
 		Done *bool `json:"done"`
 	}
-	if err = json.NewDecoder(http.MaxBytesReader(nil, response.Body, 8192)).Decode(&status); err != nil || status.Done == nil {
+	status, err := check("install.php", "", &setup)
+	if err == nil && setup.Done != nil {
+		return *setup.Done, nil
+	}
+	if status != 404 {
+		if err == nil {
+			err = fmt.Errorf("адрес не вернул ожидаемый ответ LChatHost")
+		}
+		return false, err
+	}
+	// A configured host can remove install.php after creating its database.
+	var session struct {
+		CSRF             string `json:"csrf"`
+		RegistrationOpen *bool  `json:"registration_open"`
+	}
+	if _, err := check("api.php", "action=me", &session); err != nil {
+		return false, err
+	}
+	if session.CSRF == "" || session.RegistrationOpen == nil {
 		return false, fmt.Errorf("адрес не вернул ожидаемый ответ LChatHost")
 	}
-	return *status.Done, nil
+	return true, nil
 }
 
 func phpString(value string) string {
@@ -128,7 +152,7 @@ func main() {
 		}
 	}
 	if *version {
-		fmt.Println("LChatWeb Panel 1.0.0")
+		fmt.Println("LChatWeb Panel 1.0.1")
 		return
 	}
 	root, err := filepath.Abs(*folder)
@@ -214,5 +238,5 @@ func main() {
 			_ = exec.Command("xdg-open", address).Start()
 		}
 	}
-	log.Fatal((&http.Server{Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 20 * time.Second, WriteTimeout: 25 * time.Second}).Serve(listener))
+	log.Fatal((&http.Server{Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 20 * time.Second, WriteTimeout: 30 * time.Second}).Serve(listener))
 }
