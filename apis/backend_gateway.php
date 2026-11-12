@@ -64,7 +64,7 @@ function backend_gateway(): void {
     ]);
     if ($method === 'POST') curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
     if ($method === 'HEAD') curl_setopt($ch, CURLOPT_NOBODY, true);
-    $ok = curl_exec($ch); $status = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE); $errorCode = curl_errno($ch); $errorText = curl_error($ch); curl_close($ch);
+    $ok = curl_exec($ch); $status = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE); $errorCode = curl_errno($ch); $errorText = curl_error($ch); unset($ch);
     if (!$ok || $status < 100) { error_log('LChat gateway: cURL error ' . $errorCode . ' ' . $errorText); fclose($temp); fail(502, 'Не удалось подключиться к серверу на ПК. Проверьте HTTPS и доступность сервера.'); }
     http_response_code($status);
     foreach ($received as [$name, $value]) {

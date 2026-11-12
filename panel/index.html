@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Настройка LChatWeb</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui;background:#101721;color:#edf5ff}*{box-sizing:border-box}main{max-width:660px;margin:8vh auto;padding:0 22px}section{background:#1a2636;border:1px solid #30445d;border-radius:20px;padding:28px}h1{margin:0;font-size:34px}p{line-height:1.55;color:#afc4dc}label{display:block;margin:16px 0}input:not([type=checkbox]){display:block;width:100%;margin-top:7px;padding:13px;color:inherit;background:#101a27;border:1px solid #49617c;border-radius:9px;font:inherit}button{background:#8be9cb;color:#10261f;border:0;border-radius:9px;padding:12px 16px;font:inherit;font-weight:650;margin:4px 8px 4px 0;cursor:pointer}button.secondary{background:#2d425a;color:#edf5ff}code{overflow-wrap:anywhere}.ok{color:#95edce}.error{color:#ffb5bc}
+</style>
+<main>
+<h1>Настройка LChatWeb</h1>
+<p>Свяжите веб-интерфейс с вашим LChatHost. Скопируйте адрес и <code>proxy_secret</code> из панели хоста.</p>
+<section>
+<form method="post">
+<label>HTTPS-адрес LChatHost<input name="backend" type="url" placeholder="https://backend.example.com/" value="{{.Backend}}" required></label>
+<label>Общий секрет шлюза<input name="secret" type="password" minlength="32" maxlength="512" autocomplete="off" required></label>
+<label><input type="checkbox" name="replace" value="yes"> Заменить существующий config.php</label>
+<button name="action" value="test" class="secondary">Проверить соединение</button>
+<button name="action" value="save">Проверить и сохранить</button>
+</form>
+{{if .Message}}<p role="status" class="{{if .Error}}error{{else}}ok{{end}}">{{.Message}}</p>{{end}}
+</section>
+<p>Папка проекта <code>{{.Root}}</code></p>
+</main>
+</html>
