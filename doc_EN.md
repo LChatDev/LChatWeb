@@ -16,3 +16,5 @@ LChatWeb serves pages and securely forwards application requests to [LChatHost](
 LChatWeb serves the admin page and settings form; LChatHost checks authorization and stores settings. The owner can change the name, registration, call limit and TURN. LChatHost's example points to the owner's server `turn:209.25.141.16:45209?transport=tcp`; its secret must be set privately on LChatHost and is not in the repository. If the backend is offline, the page may load but the app cannot work. The public backend is also directly reachable: protect the server and keep secrets private. Calls across networks may require a separate [TURN server](https://github.com/LChatDev/LChat/blob/main/CALLS.md); the HTTPS gateway does not replace it.
 
 Back up both configs, the database, `data/` and `files/` before updates. GitHub Pages does not run PHP. End-to-end tests were run locally; deployment on a real host has not been verified.
+
+Message encryption is configured on the backend. See [LChatHost](https://github.com/LChatDev/LChatHost/blob/main/MESSAGE_ENCRYPTION.md).
