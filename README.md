@@ -27,3 +27,8 @@ LChat's web frontend and PHP gateway. A separate [LChatHost](https://github.com/
 Анимированные эмодзи и сведения об источнике: [EMOJI.md](EMOJI.md).
 
 Панель настройки шлюза для Windows и Linux доступна в релизах. [Инструкция](panel/README.md)
+
+
+[Codex skill / ИИ-скилл](.agents/skills/lchat-maintainer/SKILL.md). Open the repository in Codex and invoke `$lchat-maintainer`.
+
+[Fork appearance / Настройка оформления](CUSTOMIZATION.md).
