@@ -1,16 +1,18 @@
 <?php header('Cache-Control: no-store, max-age=0'); ?>
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-pixel-theme>
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1018"><meta name="description" content="LChat — личные и групповые чаты, голосовые и видеозвонки.">
-  <title>LChat — ближе друг к другу</title><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="manifest.webmanifest">
+  <title>LChat — ближе друг к другу</title><link rel="icon" href="assets/pixel-icon.png" type="image/png"><link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="assets/style.css?v=20261026-login2"><script src="assets/app.js?v=20261113-chat-sync1" defer></script><script src="assets/settings.js?v=20261026-modules1" defer></script><script src="assets/bots.js?v=20261026-botcreator1" defer></script><script src="assets/weba-ui.js?v=20261029-weba2" defer></script>
 <link id="dark-theme-style" rel="stylesheet" href="assets/theme.css?v=20261013-glass1"><link id="dark-details-style" rel="stylesheet" href="assets/details.css?v=20261014-path1"><link rel="stylesheet" href="assets/settings.css?v=20261026-settings1"><link rel="stylesheet" href="assets/message-extra.css?v=20261026-reactions1"><link rel="stylesheet" href="assets/bots.css?v=20261026-bots1"><link rel="stylesheet" href="assets/aurora.css?v=20261026-replykb1"><link rel="stylesheet" href="assets/weba.css?v=20261029-weba2"><link rel="stylesheet" href="assets/community.css?v=20261030-community1"><script defer src="assets/community.js?v=20261030-community1"></script><link rel="stylesheet" href="assets/animated-emoji.css?v=20261107-5"><script defer src="assets/animated-emoji.js?v=20261107-5"></script><link rel="stylesheet" href="assets/glass-presence.css?v=20261111-1"><link rel="stylesheet" href="assets/custom.css">
   <link rel="stylesheet" href="assets/mobile-nav.css?v=20261115-mobile1">
   <link rel="stylesheet" href="assets/mobile-shell.css?v=20261115-mobile1">
   <script src="assets/mobile-nav.js?v=20261115-mobile1" data-edition="web" defer></script>
   <script src="assets/mobile-shell.js?v=20261115-mobile1" defer></script>
+  <link rel="stylesheet" href="assets/pixel-theme.css?v=20261115-pixel1">
+  <script src="assets/pixel-theme.js?v=20261115-pixel1" defer></script>
 </head>
 <body>
   <div id="loading" class="loading"><span class="brand-mark">L</span><p>Подключаемся к LChat…</p></div>
