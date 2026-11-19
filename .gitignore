@@ -1,3 +1,19 @@
 config.php
 *.log
 .env
+
+# Private deployment state
+**/config.php
+**/.env
+*.sqlite
+*.sqlite-*
+*.sql
+*.partial
+*.stage-*
+*.lx8tmp
+/data/*
+!/data/.htaccess
+!/data/index.php
+/files/*
+!/files/.htaccess
+/sites/*/
